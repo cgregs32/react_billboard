@@ -5,7 +5,7 @@ import { Grid} from 'semantic-ui-react'
 //map over this.props.songs
 //mapped over item will be our Song component
 
-const SongList = ({ songs, updateSong, deleteSong }) => (
+const SongList = ({ songs, updateSong, deleteSong, resetState }) => (
   <Grid columns='equal'>
 
 
@@ -13,6 +13,7 @@ const SongList = ({ songs, updateSong, deleteSong }) => (
       <Song
         key={song.id}
         {...song}
+        resetState={resetState}
         deleteSong={deleteSong}
         updateSong={updateSong}
       />

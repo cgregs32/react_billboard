@@ -1,4 +1,6 @@
 class Api::SongsController < ApplicationController
+  before_action :set_song, except: [:index, :create]
+
 
   def index
     render json: Song.all
@@ -14,7 +16,11 @@ class Api::SongsController < ApplicationController
   end
 
   def update
-    # item = Item.find(params[:id])
+    if @song.update(song_params)
+      render json: @song
+    else
+      render json: {errors: @song.errors.full_messages.join(',')}, status: :bad_request
+    end
   end
 
   def destroy
@@ -24,5 +30,9 @@ class Api::SongsController < ApplicationController
   private
     def song_params
       params.require(:song).permit(:title, :duration, :rank)
+    end
+
+    def set_song
+      @song = Song.find(params[:id])
     end
 end
